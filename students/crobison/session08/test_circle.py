@@ -7,7 +7,14 @@
 from circle import Circle
 
 def test_radius():
-    Circle(4)
-    return Circle()
+    c = Circle(4)
+    assert c.radius == 4
 
-    
+def test_diameter():
+    c = Circle(4)
+    assert c.diameter == 8
+
+def test_set_diameter():
+    c = Circle(4)
+    c.diameter = 10
+    assert c.radius == 5
