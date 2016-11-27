@@ -5,6 +5,7 @@
 # Circle Lab
 
 from circle import Circle
+import math
 
 def test_radius():
     c = Circle(4)
@@ -17,4 +18,10 @@ def test_diameter():
 def test_set_diameter():
     c = Circle(4)
     c.diameter = 10
+    assert c.diameter == 10
     assert c.radius == 5
+
+def test_area():
+    c = Circle(4)
+    assert c.area == math.pi * 4 ** 2
+
