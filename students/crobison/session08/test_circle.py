@@ -25,3 +25,8 @@ def test_area():
     c = Circle(4)
     assert c.area == math.pi * 4 ** 2
 
+def test_diameter_circle():
+    c = Circle.from_diameter(8)
+    assert c.diameter == 8
+    assert c.radius == 4
+
