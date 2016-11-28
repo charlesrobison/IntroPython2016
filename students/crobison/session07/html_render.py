@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+#!/usr/bin/env python3
+
+
+# Charles Robison
+# Session 07
+# HTML Render Lab
 class TextWrapper:
     """
     Added from solutions but not clear on what this is...
@@ -20,7 +26,8 @@ class TextWrapper:
 class Element:
     tag = "html"
     indent = "    "
-    def __init__(self, content = None):
+    def __init__(self, content = None, **kwargs):
+        self.attributes = kwargs
         self.content = []
         if content:
             self.append(content)
@@ -31,12 +38,34 @@ class Element:
         else:
             self.content.append(TextWrapper(str(content)))
 
-    def render(self, out_file, ind=""):
-        out_file.write("<{}>\n".format(ind, self.tag))
+    def make_tags(self):
+        attrs = " ".join(['{}="{}"'.format(key, val) for key, val in self.attributes.items()])
+        if attrs.strip():
+            open_tag = "<{} {}>".format(self.tag, attrs.strip())
+        else:
+            open_tag = "<{}>".format(self.tag)
+        close_tag = "</{}>".format(self.tag)
+        return open_tag, close_tag
+
+    def render(self, out_file, current_ind=""):
+        print("in render, type of self", type(self))
+        open_tag, close_tag = self.make_tags()
+        out_file.write(current_ind + open_tag + "\n")
         for stuff in self.content:
-            stuff.render(out_file, ind + self.indent)
+            stuff.render(out_file, current_ind + self.indent)
             out_file.write("\n")
-        out_file.write("</{}>\n".format(ind, self.tag))
+        out_file.write(current_ind + close_tag)
+
+class OneLineTag(Element):
+    def render(self, out_file, current_ind=""):
+        open_tag, close_tag = self.make_tags()
+        out_file.write(current_ind + open_tag)
+        for stuff in self.content:
+            try:
+                stuff.render(out_file)
+            except AttributeError:
+                out_file.write(stuff)
+        out_file.write(close_tag)
 
 class Html(Element):
     tag = "html"
