@@ -6,7 +6,7 @@ test code for html_render.py
 # Session 07
 # HTML Render Lab
 
-from html_render import Element, Html, Body, P, TextWrapper, Head
+from html_render import Element, Html, Body, P, TextWrapper, Head, Title
 import io
 
 def render_result(element, ind=""):
@@ -163,6 +163,17 @@ def test_mulitiple_indent():
         assert lines[i].startswith(i * Element.indent + "<")
 
     assert lines[3].startswith(3 * Element.indent + "some")
+
+def test_title():
+    t = Title("Some title text")
+    file_contents = render_result(t, ind="   ")
+
+    print(file_contents)
+
+    assert "\n" not in  file_contents
+    assert file_contents.startswith("   <title>")
+    assert file_contents.endswith("</title>")
+    assert "\n" not in file_contents
 
 
 def test_head():
