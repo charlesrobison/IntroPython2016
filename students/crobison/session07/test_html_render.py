@@ -6,7 +6,7 @@ test code for html_render.py
 # Session 07
 # HTML Render Lab
 
-from html_render import Element, Html, Body, P, Head
+from html_render import Element, Html, Body, P, TextWrapper, Head
 import io
 
 def render_result(element, ind=""):
@@ -103,6 +103,25 @@ def test_p():
     # assert False
     #assert file_contents.startswith("<p>")
     #assert file_contents.strip().endswith("</p>")
+
+def test_text_wrapper():
+    tw = TextWrapper("A basic piece of text")
+
+    file_contents = render_result(tw)
+    assert file_contents == "A basic piece of text"
+
+def text_sub_element():
+    page = Html()
+    page.append("some plain text.")
+    page.append(P("A simple paragraph of text"))
+    page.append("Some more plain text.")
+
+    file_contents = render_result(page)
+
+    assert "some plain text" in file_contents
+    assert "A simple paragraph of text" in file_contents
+    assert "Some more plain text." in file_contents
+    assert "some plain text" in file_contents
 
 def test_head():
     outfile = io.StringIO()
