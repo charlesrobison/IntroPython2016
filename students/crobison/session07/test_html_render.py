@@ -123,6 +123,48 @@ def text_sub_element():
     assert "Some more plain text." in file_contents
     assert "some plain text" in file_contents
 
+def test_step_2_noindent():
+    page = Html()
+    body = Body()
+    page.append(body)
+    body.append(P("a small paragraph of text"))
+    body.append(P("another small paragraph of text"))
+    body.append(P("and here is a bit more"))
+
+    file_contents = render_result(page).strip()
+
+def test_indent():
+    html = Html("some content")
+    file_contents = render_result(html, ind="   ")
+
+    print(file_contents)
+    lines = file_contents.split("\n")
+    assert lines[0].startswith("   <")
+    assert lines[-1].startswith("   <")
+
+def test_indent_contents():
+    html = Html("some content")
+    file_contents = render_result(html, ind="")
+
+    print(file_contents)
+    lines = file_contents.split("\n")
+    assert lines[1].startswith(Element.indent)
+
+def test_mulitiple_indent():
+    body = Body()
+    body.append(P("some text"))
+    html = Html(body)
+
+    file_contents = render_result(html)
+
+    print(file_contents)
+    lines = file_contents.split("\n")
+    for i in range(3):
+        assert lines[i].startswith(i * Element.indent + "<")
+
+    assert lines[3].startswith(3 * Element.indent + "some")
+
+
 def test_head():
     outfile = io.StringIO()
 
