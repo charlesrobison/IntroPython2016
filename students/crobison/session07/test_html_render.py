@@ -6,7 +6,7 @@ test code for html_render.py
 # Session 07
 # HTML Render Lab
 
-from html_render import Element, Html, Body, P, TextWrapper, Head, Title
+from html_render import Element, Html, Body, P, TextWrapper, Head, Title, Br
 import io
 
 def render_result(element, ind=""):
@@ -189,9 +189,25 @@ def test_head():
     assert("this is some text") in file_contents
     assert("and this is some more text") in file_contents
 
+def test_attributes():
+    e = Element("some text", id="this", color="red")
+    file_contents = render_result(e)
+    print(file_contents)
+    assert 'id="this"' in file_contents
+    assert 'color="red"' in file_contents
 
+def test_attributes_one_line_tag():
+    e = Element("some text", id="this", color="red")
+    file_contents = render_result(e)
+    print(file_contents)
+    assert 'id="this"' in file_contents
+    assert 'color="red"' in file_contents
 
-
+def test_br():
+    br = Br("")
+    file_contents = render_result(br)
+    print(file_contents)
+    assert file_contents == "<br />"
 
 
 

@@ -56,16 +56,6 @@ class Element:
             out_file.write("\n")
         out_file.write(current_ind + close_tag)
 
-class OneLineTag(Element):
-    def render(self, out_file, current_ind=""):
-        open_tag, close_tag = self.make_tags()
-        out_file.write(current_ind + open_tag)
-        for stuff in self.content:
-            try:
-                stuff.render(out_file)
-            except AttributeError:
-                out_file.write(stuff)
-        out_file.write(close_tag)
 
 class Html(Element):
     tag = "html"
@@ -79,5 +69,22 @@ class P(Element):
 class Head(Element):
     tag = "head"
 
+class OneLineTag(Element):
+    def render(self, out_file, ind=""):
+        open_tag, close_tag = self.make_tags()
+        out_file.write(ind + open_tag)
+        for stuff in self.content:
+            stuff.render(out_file)
+        out_file.write(close_tag)
 
+class Title(OneLineTag):
+    tag = "title"
+
+class SelfClosingTag(Element):
+    def render(self, out_file, ind=""):
+        open_tag, _ = self.make_tags()
+        out_file.write(ind + open_tag.replace(">", " />"))
+
+class Br(SelfClosingTag):
+    tag = "br"
 
