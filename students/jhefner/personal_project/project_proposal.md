@@ -7,11 +7,10 @@ This is going to be a tool for myself to use at work and eliminate a _*LARGE*_ a
 
 The python program will need to do the following:
 
-* Connect to mysql a remote mysql server and run select commands.
-* Take data from mysql select commands and create a specifically structured dictionary for Ansible to ingest.
-* Create a json output from the program for the `ansible` command line tool to ingest.
+* Connect to a remote mysql server and run select commands.
+* Take the return data from mysql select commands and create a specifically useful dictionary of results (if dictionary is the right data model for mysql results).
+* Output to stdout json in the format Ansible is expecting in order to properly use the data.
 
-The will hopefully be featured enough to:
-
-* Parse multiple options sent to it via the command line.
-* Output useful verbose information to stdout (for validation of what is being sent to `ansible`).
+Additional optional things to include (time permitting):
+* Make available several command line arguments for input.
+* Create useful verbose output to stdout when -v is specified.

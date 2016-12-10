@@ -4,8 +4,7 @@ test code for html_render.py
 """
 import io
 
-from html_render import Element, Html, Body, P
-
+from html_render import Element, Html, Body, P, Head, Title
 
 def test_init():
     e = Element()
@@ -68,6 +67,9 @@ def test_Html():
     assert('This is some text') in file_contents
     assert('This is some more text') in file_contents
 
+    assert file_contents.startswith("<html>")
+    assert file_contents.strip().endswith("</html>")
+
 def test_Body():
     outfile = io.StringIO()
 
@@ -83,6 +85,9 @@ def test_Body():
 
     assert('This is some text') in file_contents
     assert('This is some more text') in file_contents
+
+    assert file_contents.startswith("<body>")
+    assert file_contents.strip().endswith("</body>")
 
 def test_P():
     outfile = io.StringIO()
@@ -100,4 +105,89 @@ def test_P():
     assert('This is some text') in file_contents
     assert('This is some more text') in file_contents
 
-    # something == False
+    assert file_contents.startswith("<p>")
+    assert file_contents.strip().endswith("</p>")
+
+def test_Head():
+    outfile = io.StringIO()
+
+    e = Head('This is some text')
+    e.append('This is some more text')
+
+    e.render(outfile)
+
+    outfile.seek(0)
+    file_contents = outfile.read()
+
+    print(file_contents)
+
+    assert('This is some text') in file_contents
+    assert('This is some more text') in file_contents
+
+    assert file_contents.startswith("<head>")
+    assert file_contents.strip().endswith("</head>")
+
+def test_Title():
+    outfile = io.StringIO()
+
+    e = Title('This is some text')
+    e.append('This is some more text')
+
+    e.render(outfile)
+
+    outfile.seek(0)
+    file_contents = outfile.read()
+
+    print(file_contents)
+
+    assert('This is some text') in file_contents
+    assert('This is some more text') in file_contents
+
+    assert file_contents.startswith("<title>")
+    assert file_contents.strip().endswith("</title>")
+
+def test_html_body():
+    outfile = io.StringIO()
+
+    e = Html('This is HTML text')
+    f = Body('This is BODY text')
+
+    e.append(f)
+
+    e.render(outfile)
+
+    outfile.seek(0)
+    file_contents = outfile.read()
+
+    print(file_contents)
+
+    assert('This is HTML text') in file_contents
+    assert('This is BODY text') in file_contents
+
+    assert file_contents.startswith("<html>")
+    assert file_contents.strip().endswith("</html>")
+
+def test_step3():
+    outfile = io.StringIO()
+
+    p = Html()
+    h = Head()
+    h.append(Title('This is TITLE'))
+    p.append(h)
+    b = Body()
+    b.append(P('This is P'))
+    p.append(b)
+
+    p.render(outfile)
+
+    outfile.seek(0)
+    file_contents = outfile.read()
+
+    print(file_contents)
+
+    assert('This is TITLE') in file_contents
+    assert('This is P') in file_contents
+
+    assert file_contents.startswith("<html>")
+    assert file_contents.strip().endswith("</html>")
+

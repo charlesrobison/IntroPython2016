@@ -84,6 +84,9 @@ celerybeat-schedule
 # virtualenv
 venv/
 ENV/
+bin/
+include/
+pip-selfcheck.json
 
 # Various IDEs
 

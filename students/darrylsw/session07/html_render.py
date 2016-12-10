@@ -3,40 +3,50 @@
 class Element:
 
 	tag = ""
+	indent = "   "
 
-	def __init__(self, content=None):
+	def __init__(self, *content, **kwcontent):
 		self.content = []
+		self.attr= []
 		if content:
-			self.content.append(content)
+			for item in content:
+				self.content.append(item)
+			for key in kwcontent:
+				value = key + '="' + kwcontent[key] + '"'
+				self.attr.append (value)
 
-	def append(self, content):
-		self.content.append(content)
 
-	def render(self, out_file, indent):
-		tag_out = indent + "<" + self.tag + ">\n"
+	def append(self, *content, **kwcontent):
+		#self.content.append(content)
+		for item in content:
+			self.content.append(item)
+		for key in kwcontent:
+			value = key + '="' + kwcontent[key] + '"'
+			self.attr.append(value)
+		
+
+	def render(self, out_file, ind=""):
+		#tag_indent=self.initial_indent # or initial_indent=indent
+		tag_out = ind + "<" + self.tag
+		for att in self.attr:
+			tag_out += " "
+			tag_out += att
+		tag_out += ">\n"
 		out_file.write (tag_out)
-		for i in self.content:
-			if isinstance(i, Element):
-				indent2 = indent + indent
-				i.render(out_file, indent2)
+		for stuff in self.content:
+			if isinstance(stuff, Element):
+				# look into using if hasattr (i, 'render')
+				indent2 = self.indent + ind
+				stuff.render(out_file, indent2)
 			else:
-				out_file.write(indent + i + "\n")
-		tag_out = indent + "</" + self.tag + ">\n"
+				indent2 = self.indent + ind 
+				out_file.write(self.indent + ind + stuff + "\n")
+		tag_out = ind + "</" + self.tag + ">\n"
 		out_file.write (tag_out)	
 
 class Html(Element):
 	tag = "html"
-
-	def render(self, out_file, indent):
-		tag_out = "<" + self.tag + ">\n"
-		out_file.write (tag_out)
-		for i in self.content:
-			if isinstance(i, Element):
-				i.render(out_file, indent)
-			else:
-				out_file.write(indent + i + "\n")
-		tag_out = "</" + self.tag + ">\n"
-		out_file.write (tag_out)
+	indent = ""
 
 class Head(Element):
 	tag = "head"
@@ -49,3 +59,6 @@ class Body(Element):
 
 class P(Element):
 	tag = "p"
+
+class Hr(Element):
+	tag = "hr"

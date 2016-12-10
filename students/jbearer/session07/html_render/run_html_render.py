@@ -11,6 +11,10 @@ from io import StringIO
 
 # importing the html_rendering code with a short name for easy typing.
 import html_render as hr
+<<<<<<< HEAD
+# import test_code as hr
+=======
+>>>>>>> 3ceb3ebffee331395c4eae6eb83b0081465145c4
 # reloading in case you are running this in iPython
 #  -- we want to make sure the latest version is used
 import importlib
@@ -55,20 +59,18 @@ def render_page(page, filename):
 # ## Step 2
 # ##########
 
-page = hr.Html()
+# page = hr.Html()
 
-body = hr.Body()
+# body = hr.Body()
 
-page.append('html stuff')
+# body.append(hr.P("Here is a paragraph of text -- there could be more of them, "
+#                  "but this is enough  to show that we can do some text"))
 
-body.append(hr.P("Here is a paragraph of text -- there could be more of them, "
-                 "but this is enough  to show that we can do some text"))
+# body.append(hr.P("And here is another piece of text -- you should be able to add any number"))
 
-body.append(hr.P("And here is another piece of text -- you should be able to add any number"))
+# page.append(body)
 
-page.append(body)
-
-render_page(page, "test_html_output2.html")
+# render_page(page, "test_html_output2.html")
 
 # # Step 3
 # ##########
@@ -200,7 +202,6 @@ render_page(page, "test_html_output2.html")
 # ########
 
 # page = hr.Html()
-
 
 # head = hr.Head()
 # head.append( hr.Meta(charset="UTF-8") )

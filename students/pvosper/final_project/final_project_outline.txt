@@ -1,0 +1,31 @@
+=== FINAL PROJECT OUTLINE ===
+
+Personal Project The bulk of the homework for the rest of the class will be a
+personal project:
+
+It can be for fun, or something you need for your job. It should be large enough
+to take a few weeks homework time to do. It should demostrate that you can do
+something useful with python. It should follow PEP8
+(https://www.python.org/dev/peps/pep-0008) It should have unit tests! Ideally,
+it will be in version control (gitHub) I don’t require any specific python
+features (i.e. classes): use what is appropriate for your project Due the Sunday
+after the last class (December 11)
+
+By next week, send me a project proposal: short and sweet.
+
+Final Project Proposal:
+
+In Destiny, each Destination has assets preloaded through Tag Bags - a single
+file that contains references to individual assets as well as to Budget Sets,
+which are themselves collections of references to assets.
+
+Goal: Create report that lists all referenced assets, sorted by Destination
+
+1) Create dictionary with Destinations and their associated Tag Bag
+    1.1) Crawl a folder that contains Destination folders
+    1.2) In each folder, find the .grognok_map file
+    1.3) In each map file, find the reference for .global_tag_bag
+2) Create dictionary for each common Budget Set and their associated assets
+    1.1) Crawl a folder that contains Budget Sets
+    1.2) In each Budget Set, find all references to assets
+3) Create report that lists all referenced assets, sorted by Destination
